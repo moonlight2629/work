@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Анализ платежей — счёт-копилка АНБО «Семья»</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f5f3; color: #1a1a18; padding: 2rem; }
+h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+.subtitle { font-size: 14px; color: #5f5e5a; margin-bottom: 2rem; }
+.section-title { font-size: 12px; font-weight: 500; color: #888780; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 2rem; }
+.card { background: #fff; border: 0.5px solid #d3d1c7; border-radius: 8px; padding: 1rem; }
+.card-label { font-size: 12px; color: #888780; margin-bottom: 6px; }
+.card-value { font-size: 22px; font-weight: 500; }
+.card-sub { font-size: 12px; color: #888780; margin-top: 4px; }
+.c-green .card-value { color: #0F6E56; }
+.c-amber .card-value { color: #854F0B; }
+.c-red .card-value { color: #A32D2D; }
+.bar-section { margin-bottom: 2rem; }
+.bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.bar-label { font-size: 13px; min-width: 150px; }
+.bar-track { flex: 1; background: #f1efe8; border-radius: 4px; height: 28px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 10px; font-size: 12px; font-weight: 500; }
+.bar-fill.green { background: #9FE1CB; color: #085041; }
+.bar-fill.amber { background: #FAC775; color: #633806; }
+.bar-fill.red { background: #F7C1C1; color: #791F1F; }
+.bar-amt { font-size: 13px; color: #5f5e5a; min-width: 130px; text-align: right; }
+.highlight-cards { display: flex; gap: 16px; margin-bottom: 2rem; flex-wrap: wrap; }
+.highlight-card { flex: 1; min-width: 200px; background: #fff; border: 0.5px solid #d3d1c7; border-radius: 8px; padding: 1rem; }
+.highlight-card .big-value { font-size: 26px; font-weight: 500; }
+.highlight-card .big-value.green { color: #0F6E56; }
+.highlight-card .big-value.blue { color: #185FA5; }
+.divider { border: none; border-top: 0.5px solid #d3d1c7; margin: 1.5rem 0; }
+.table-wrap { border: 0.5px solid #d3d1c7; border-radius: 12px; overflow: hidden; margin-bottom: 2rem; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #f1efe8; color: #888780; font-weight: 500; padding: 10px 14px; text-align: left; border-bottom: 0.5px solid #d3d1c7; }
+td { padding: 9px 14px; border-bottom: 0.5px solid #d3d1c7; vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+.badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 6px; }
+.badge-green { background: #E1F5EE; color: #0F6E56; }
+.badge-amber { background: #FAEEDA; color: #854F0B; }
+.badge-red { background: #FCEBEB; color: #A32D2D; }
+.badge-blue { background: #E6F1FB; color: #185FA5; }
+.alert { background: #FCEBEB; border-left: 3px solid #E24B4A; padding: 10px 14px; font-size: 13px; color: #A32D2D; margin-bottom: 10px; border-radius: 0 6px 6px 0; }
+.notice { background: #FAEEDA; border-left: 3px solid #EF9F27; padding: 10px 14px; font-size: 13px; color: #633806; margin-bottom: 10px; border-radius: 0 6px 6px 0; }
+.note-box { background: #f1efe8; border-radius: 8px; padding: 1rem; font-size: 13px; color: #5f5e5a; line-height: 1.7; margin-bottom: 2rem; }
+.amount { font-variant-numeric: tabular-nums; }
+@media (max-width: 600px) {
+  .cards { grid-template-columns: 1fr; }
+  .bar-label { min-width: 100px; font-size: 12px; }
+  .bar-amt { min-width: 90px; font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<h1>Анализ платежей на счёте-копилке</h1>
+<p class="subtitle">АНБО «Центр поддержки школ и учащихся "Семья"» · Период 17.01.2025 — 13.04.2026</p>
+
+<div class="section-title">Итоги по счёту-копилке</div>
+<div class="cards">
+  <div class="card c-green">
+    <div class="card-label">Явно на ЦК</div>
+    <div class="card-value">1 479 538 ₽</div>
+    <div class="card-sub">192 транзакции · в назначении прямо указан ЦК или эндаумент</div>
+  </div>
+  <div class="card c-amber">
+    <div class="card-label">Можно поправить</div>
+    <div class="card-value">1 777 633 ₽</div>
+    <div class="card-sub">12 транзакций · нужны договоры с указанием цели</div>
+  </div>
+  <div class="card c-red">
+    <div class="card-label">Проблемные</div>
+    <div class="card-value">49 450 ₽</div>
+    <div class="card-sub">3 транзакции · в ЦК включить нельзя</div>
+  </div>
+</div>
+
+<div class="bar-section">
+  <div class="section-title">Структура по сумме (итого 3 306 621 ₽)</div>
+  <div class="bar-row">
+    <div class="bar-label">Явно на ЦК</div>
+    <div class="bar-track">
+      <div class="bar-fill green" style="width:44.7%">44.7%</div>
+    </div>
+    <div class="bar-amt amount">1 479 538 ₽</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Можно поправить</div>
+    <div class="bar-track">
+      <div class="bar-fill amber" style="width:53.8%">53.8%</div>
+    </div>
+    <div class="bar-amt amount">1 777 633 ₽</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Проблемные</div>
+    <div class="bar-track">
+      <div class="bar-fill red" style="width:1.5%"></div>
+    </div>
+    <div class="bar-amt amount">49 450 ₽</div>
+  </div>
+</div>
+
+<div class="highlight-cards">
+  <div class="highlight-card">
+    <div class="card-label" style="margin-bottom:8px;">Итого пригодно для ЦК</div>
+    <div class="big-value green">3 257 171 ₽</div>
+    <div class="card-sub" style="margin-top:6px;">если оформить договоры по «жёлтым» платежам</div>
+  </div>
+  <div class="highlight-card">
+    <div class="card-label" style="margin-bottom:8px;">Минимум по 275-ФЗ</div>
+    <div class="big-value blue">3 000 000 ₽</div>
+    <div class="card-sub" style="margin-top:6px;">достигается даже без части «жёлтых» платежей</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section-title">Что входит в «явно на ЦК»</div>
+<div class="note-box" style="margin-bottom:1rem;">
+  Все 192 транзакции содержат в назначении платежа одно из следующих: «пожертвование в целях пополнения эндаумента», «на формирование целевого капитала», «эндаумент», «пополнение эндаумент фонда» и аналоги. Воля жертвователя зафиксирована текстом платёжного поручения.
+</div>
+<div class="notice" style="margin-bottom:2rem;">
+  <strong>Рахимов Айдар — 5 платежей, 101 500 ₽</strong> · назначение просто «эндаумент», без дополнительных слов. Формально засчитывается, но рекомендуется подписать договор — формулировка минималистичная.
+</div>
+
+<hr class="divider">
+
+<div class="section-title">Крупные платежи без явного указания на ЦК — нужны договоры (&gt;10 000 ₽)</div>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Дата</th>
+        <th>Плательщик</th>
+        <th>Назначение в выписке</th>
+        <th style="text-align:right">Сумма</th>
+        <th>Статус</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>24.03.2025</td>
+        <td>Аляутдинов Ислам</td>
+        <td>«Благотворительность»</td>
+        <td class="amount" style="text-align:right">500 000 ₽</td>
+        <td><span class="badge badge-amber">нужен договор</span></td>
+      </tr>
+      <tr>
+        <td>28.03.2025</td>
+        <td>Салаев Заур (ИП)</td>
+        <td>«Оплата пожертвование»</td>
+        <td class="amount" style="text-align:right">500 000 ₽</td>
+        <td><span class="badge badge-amber">нужен договор</span></td>
+      </tr>
+      <tr>
+        <td>14.11.2025</td>
+        <td>Курбангалиев Тимур</td>
+        <td>«Благотворительность»</td>
+        <td class="amount" style="text-align:right">250 000 ₽</td>
+        <td><span class="badge badge-amber">нужен договор</span></td>
+      </tr>
+      <tr>
+        <td>08.09.2025</td>
+        <td>Хуснеев Ирек (ИП)</td>
+        <td>«Благотворительный взнос»</td>
+        <td class="amount" style="text-align:right">150 000 ₽</td>
+        <td><span class="badge badge-amber">нужен договор</span></td>
+      </tr>
+      <tr>
+        <td>11.04.2025</td>
+        <td>ООО «Агро-Инвест»</td>
+        <td>«Благотворительная помощь»</td>
+        <td class="amount" style="text-align:right">100 000 ₽</td>
+        <td><span class="badge badge-amber">нужен договор</span></td>
+      </tr>
+      <tr>
+        <td>02.03.2026</td>
+        <td>Гайнанов Булат</td>
+        <td>«Благотворительный взнос»</td>
+        <td class="amount" style="text-align:right">100 000 ₽</td>
+        <td><span class="badge badge-amber">нужен договор</span></td>
+      </tr>
+      <tr>
+        <td>05.09.2025</td>
+        <td>ООО «СтройКлюч-НК»</td>
+        <td>«Перечисление на благотворит. цели»</td>
+        <td class="amount" style="text-align:right">100 000 ₽</td>
+        <td><span class="badge badge-amber">нужен договор</span></td>
+      </tr>
+      <tr>
+        <td>12.05.2025</td>
+        <td>Фахертдинов Рифат (ИП)</td>
+        <td>«Пожертвование, договор №4/2025»</td>
+        <td class="amount" style="text-align:right">30 000 ₽</td>
+        <td><span class="badge badge-blue">есть договор — уточнить цель</span></td>
+      </tr>
+      <tr>
+        <td>30.04.2025</td>
+        <td>Нуриев Салават</td>
+        <td>«Благотворительность»</td>
+        <td class="amount" style="text-align:right">10 000 ₽</td>
+        <td><span class="badge badge-amber">нужен договор</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section-title" style="margin-bottom:8px;">Проблемные платежи — исключить из ЦК</div>
+<div class="alert">
+  <strong>23.06.2025 — 49 450 ₽</strong> · «Перевод собственных средств между счетами организации» — прямо запрещён ст. 4 ч. 2 275-ФЗ. Исключить из суммы ЦК.
+</div>
+<div class="alert">
+  <strong>15.04.2025 — 5 000 ₽</strong> · «Благотворительный взнос родителя ребёнка поступающего в 6 класс» — похоже на оплату услуги, не пожертвование. Разобраться отдельно.
+</div>
+<div class="alert" style="margin-bottom:2rem;">
+  <strong>31.03.2025 — 2 000 ₽</strong> · «Вклад» — неясная природа платежа. Не включать в ЦК.
+</div>
+
+<hr class="divider">
+
+<div class="section-title">Мелкие неясные платежи (&lt;10 000 ₽) — 58 транзакций</div>
+<div class="note-box">
+  Преимущественно Каримов Айдар (~41 платёж по 100–1000 ₽, назначение «пожертвование») и Махмутова Гузель (4 платежа с назначением «ли фэмили», 1 000 ₽ суммарно). Итого около <strong>47 633 ₽</strong>. Оформление договоров нецелесообразно — сумма незначительна, ЦК набирается без них. Не включать в ЦК.
+</div>
+
+<hr class="divider">
+
+<p style="font-size:12px; color:#888780;">Документ подготовлен для внутреннего использования. Данные из банковской выписки счёта №40703810000000746783 за период 17.01.2025–13.04.2026.</p>
+
+</body>
+</html>
